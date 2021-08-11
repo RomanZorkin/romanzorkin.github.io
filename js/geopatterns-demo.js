@@ -8,31 +8,6 @@ const API_URL = 'https://dqrura49d0.execute-api.us-east-1.amazonaws.com/generate
 function random_int(max) {
     return Math.floor(Math.random() * max);
 }
-/*
-function random_phrase() {
-    text: 'null'
-    axios
-      .get('https://fish-text.ru/get?format=json&number=1')
-      .then(response => (this.text = response.data.text));
-
-    return this.text
-}
-
-const MyApi = {
-  data() {
-    return {
-      text: null
-    }
-  },
-  mounted() {
-    axios
-      .get('https://fish-text.ru/get?format=json&number=1')
-      .then(response => (this.text = response.data.text));
-  }
-}
-
-Vue.createApp(MyApi).mount('#app');
-const textapi = Vue.createApp(MyApi)*/
 
 const GeopatternsApp = {
     data() {
