@@ -1,39 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <link
-            rel="shortcut icon"
-            href="./img/favicon.ico"
-    />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-          integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
-          crossorigin="anonymous"/>
-
-    <link rel="stylesheet" href="css/geopatterns-demo.css"/>
-
-    <title>geopatterns-demo</title>
-</head>
-<body>
 <div id="app">
-    <div id="content" :style="style">
-        <div class="ui container">
-            <div class="ui huge fluid action input">
-                <input autofocus="autofocus"
-                       id="input"
-                       v-model="text"
-                       v-on:keydown="on_key_pressed"
-                       type="text"
-                >
-            </div>
-        </div>
-    </div>
-</div>
-<div id="app1">
-
+  {{ info }}
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -42,22 +9,19 @@
 <script src="https://unpkg.com/vue@next"></script>
 <script src="js/geopatterns-demo.js"></script>
 <script>
-    new Vue({
-      el: '#app1',
-      data() {
-        return {
-          info: null
-        };
-      },
-      mounted() {
-        axios
-          .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-          .then(response => (this.info = response));
-      }
-    });
-    const app = Vue.createApp()
-
-app.mount('#app1');
+new Vue({
+  el: '#app',
+  data() {
+    return {
+      info: null
+    };
+  },
+  mounted() {
+    axios
+      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .then(response => (this.info = response));
+  }
+});
 </script>
 </body>
 </html>
