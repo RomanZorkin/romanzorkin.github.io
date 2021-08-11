@@ -14,7 +14,7 @@
     border: none;
     font-size: 6rem;
     color: black;
-    text-wrap: normal;
+    text-wrap: break-word;
     text-align: center;
     margin-top: 20%;
 }
