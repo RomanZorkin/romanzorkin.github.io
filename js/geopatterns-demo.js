@@ -22,8 +22,8 @@ const MyApi = {
   }
 }
 
-Vue.createApp(MyApi).mount('#content');
-/*const textapi = Vue.createApp(MyApi)*/
+/*Vue.createApp(MyApi).mount('#content');*/
+const textapi = Vue.createApp(MyApi)
 
 const GeopatternsApp = {
     data() {
@@ -33,7 +33,7 @@ const GeopatternsApp = {
                 'plaid', 'plus_signs', 'rings', 'sinewaves', 'squares',
                 'triangles', 'xes',
             ],
-            text: 'Type something ☺',
+            text: textapi,
             method: 0,
             style: ''
         }
