@@ -12,7 +12,7 @@
   <div id="app1">
     {{ info }}
   </div>
--->  
+-->
   <div id="app1">
     <div id="content" :style="style">
         <div class="ui container">
@@ -20,7 +20,7 @@
                 <input autofocus="autofocus"
                        id="input"
                        value="{{ info }}"
-                       v-model="text"
+                       v-model="info"
                        v-on:keydown="on_key_pressed"
                        type="text"
                 >
