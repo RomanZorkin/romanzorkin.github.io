@@ -14,18 +14,16 @@ const Counter = {
 
 Vue.createApp(Counter).mount('#app')
 
-
-
-var app1 = new Vue({
-  el: '#app1',
+const MyApi = {
   data() {
     return {
       info: null
-    };
+    }
   },
   mounted() {
     axios
       .get('https://api.coindesk.com/v1/bpi/currentprice.json')
       .then(response => (this.info = response));
   }
-});
+}
+Vue.createApp(MyApi).mount('#app1')
