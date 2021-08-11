@@ -14,8 +14,9 @@
     border: none;
     font-size: 6rem;
     color: black;
-    text-wrap: break-word;
+    text-wrap: normal;
     text-align: center;
+    word-break: break-all
     margin-top: 20%;
 }
 
