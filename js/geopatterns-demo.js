@@ -9,6 +9,22 @@ function random_int(max) {
     return Math.floor(Math.random() * max);
 }
 
+const MyApi = {
+  data() {
+    return {
+      text: null
+    }
+  },
+  mounted() {
+    axios
+      .get('https://fish-text.ru/get?format=json&number=1')
+      .then(response => (this.text = response.data.text));
+  }
+}
+
+Vue.createApp(MyApi).mount('#content');
+/*const textapi = Vue.createApp(MyApi)*/
+
 const GeopatternsApp = {
     data() {
         return {
@@ -116,18 +132,3 @@ const GeopatternsApp = {
 const app = Vue.createApp(GeopatternsApp)
 
 app.mount('#app');
-
-const MyApi = {
-  data() {
-    return {
-      text: null
-    }
-  },
-  mounted() {
-    axios
-      .get('https://fish-text.ru/get?format=json&number=1')
-      .then(response => (this.text = response.data.text));
-  }
-}
-
-Vue.createApp(MyApi).mount('#content')
