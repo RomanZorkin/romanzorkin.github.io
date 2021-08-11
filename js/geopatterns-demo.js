@@ -42,7 +42,7 @@ const GeopatternsApp = {
                 'plaid', 'plus_signs', 'rings', 'sinewaves', 'squares',
                 'triangles', 'xes',
             ],
-            text: 'null',
+            text: null,
             method: 0,
             style: ''
         }
