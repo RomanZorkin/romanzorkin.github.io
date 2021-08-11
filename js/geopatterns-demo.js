@@ -22,7 +22,7 @@ const MyApi = {
   },
   mounted() {
     axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .get('https://fish-text.ru/get?format=json&number=1')
       .then(response => (this.info = response));
   }
 }
