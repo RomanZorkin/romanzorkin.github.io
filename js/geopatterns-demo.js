@@ -2,10 +2,24 @@
 // Feel free to submit pull requests!
 
 // API handled by AWS Lambda
-/*
+
 const API_URL = 'https://dqrura49d0.execute-api.us-east-1.amazonaws.com/generate';
 
+const MyApi = {
+  data() {
+    return {
+      text1: null
+    }
+  },
+  mounted() {
+    axios
+      .get('https://fish-text.ru/get?format=json&number=1')
+      .then(response => (this.text1 = response.data.text));
+  }
+}
 
+Vue.createApp(MyApi).mount('#app')
+/*
 function random_int(max) {
     return Math.floor(Math.random() * max);
 }
@@ -118,16 +132,3 @@ const app = Vue.createApp(GeopatternsApp)
 
 app.mount('#app');
 */
-const MyApi = {
-  data() {
-    return {
-      text1: null
-    }
-  },
-  mounted() {
-    axios
-      .get('https://fish-text.ru/get?format=json&number=1')
-      .then(response => (this.text1 = response.data.text));
-  }
-}
-Vue.createApp(MyApi).mount('#app1')
