@@ -19,19 +19,20 @@
       }
     })
 
-    var app1 = new Vue({
+    var app = new Vue({
       el: '#app1',
       data() {
         return {
           info: null
         };
       },
-    mounted() {
-      axios
-        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        .then(response => (this.info = response));
+      mounted() {
+        axios
+          .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+          .then(response => (this.info = response));
       }
     });
   </script>
 </body>
 </html>
+
