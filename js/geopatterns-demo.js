@@ -3,6 +3,7 @@
 
 // API handled by AWS Lambda
 const API_URL = 'https://dqrura49d0.execute-api.us-east-1.amazonaws.com/generate';
+const RANDOM_TEXT_URL = 'https://fish-text.ru/get?format=json&number=1';
 
 
 function random_int(max) {
@@ -110,7 +111,7 @@ const GeopatternsApp = {
     mounted() {
         this.download_background_and_update();
         axios
-          .get('https://fish-text.ru/get?format=json&number=1')
+          .get(RANDOM_TEXT_URL)
           .then(response => (this.text = response.data.text));
     }
 }
