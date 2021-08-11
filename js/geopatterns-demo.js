@@ -1,9 +1,20 @@
-var app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!'
+//var app = new Vue({
+//  el: '#app',
+//  data: {
+//    message: 'Hello Vue!'
+//  }
+//});
+const Counter = {
+  data() {
+    return {
+      counter: 0
+    }
   }
-});
+}
+
+Vue.createApp(Counter).mount('#app')
+
+
 
 var app1 = new Vue({
   el: '#app1',
