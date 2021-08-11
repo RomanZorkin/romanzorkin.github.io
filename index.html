@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My first Vue app</title>  
+  <title>My first Vue app</title>
+  <!--
   <script src="https://unpkg.com/vue"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  -->
 </head>
 <body>
   <div id="app">
@@ -13,8 +15,11 @@
   <div id="app1">
     {{ info }}
   </div>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-    
+
     var app = new Vue({
       el: '#app',
       data: {
@@ -38,4 +43,3 @@
   </script>
 </body>
 </html>
-
