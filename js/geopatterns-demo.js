@@ -10,7 +10,7 @@ function random_int(max) {
 }
 
 function random_phrase() {
-    text: null
+    text: 'null'
     axios
       .get('https://fish-text.ru/get?format=json&number=1')
       .then(response => (this.text = response.data.text));
