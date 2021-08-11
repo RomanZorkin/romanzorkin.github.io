@@ -7,7 +7,7 @@
 const Counter = {
   data() {
     return {
-      counter: 0
+      message: 0
     }
   }
 }
