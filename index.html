@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>My first Vue app</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
@@ -12,12 +13,13 @@
     {{ info }}
   </div>
   <script>
+    const axios = require('axios');
     var app = new Vue({
       el: '#app',
       data: {
         message: 'Hello Vue!'
       }
-    })
+    });
 
     var app = new Vue({
       el: '#app1',
