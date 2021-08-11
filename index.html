@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
@@ -14,7 +15,7 @@
           crossorigin="anonymous"/>
 
     <link rel="stylesheet" href="css/geopatterns-demo.css"/>
-
+-->
     <title>geopatterns-demo</title>
 </head>
 <body>
@@ -27,26 +28,26 @@
   {{ info }}
 </div>
 -->
-<div id="app1">
-  <div id="content" :style="style">
-      <div class="ui container">
-          <div class="ui huge fluid action input">
-              <input autofocus="autofocus"
-                     id="input"
-                     v-model="text"
-                     v-on:keydown="on_key_pressed"
-                     type="text"
-              >
-          </div>
-      </div>
+  <div id="app1">
+    <div id="content" :style="style">
+        <div class="ui container">
+            <div class="ui huge fluid action input">
+                <input autofocus="autofocus"
+                       id="input"
+                       v-model="text"
+                       v-on:keydown="on_key_pressed"
+                       type="text"
+                >
+            </div>
+        </div>
+    </div>
   </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/vue@next"></script>
-<script src="js/geopatterns-demo.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="js/geopatterns-demo.js"></script>
 </body>
 </html>
