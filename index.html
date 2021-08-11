@@ -2,12 +2,22 @@
 <div id="app">
   {{ info }}
 </div>
+<div id="app1">
+  {{ message }}
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://unpkg.com/vue@next"></script>
-
+<script>
+  var app = new Vue({
+    el: '#app1',
+    data: {
+      message: 'Привет, Vue!'
+    }
+  })
+</script>
 <script>
   import Vue from 'vue'  
   new Vue({
