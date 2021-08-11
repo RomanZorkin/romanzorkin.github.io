@@ -8,7 +8,7 @@ const API_URL = 'https://dqrura49d0.execute-api.us-east-1.amazonaws.com/generate
 function random_int(max) {
     return Math.floor(Math.random() * max);
 }
-
+/*
 function random_phrase() {
     text: 'null'
     axios
@@ -17,7 +17,7 @@ function random_phrase() {
 
     return this.text
 }
-/*
+
 const MyApi = {
   data() {
     return {
@@ -134,6 +134,9 @@ const GeopatternsApp = {
     },
     mounted() {
         this.download_background_and_update();
+        axios
+          .get('https://fish-text.ru/get?format=json&number=1')
+          .then(response => (this.text = response.data.text));
     }
 }
 
