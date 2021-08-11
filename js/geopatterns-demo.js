@@ -23,7 +23,7 @@ const MyApi = {
   mounted() {
     axios
       .get('https://fish-text.ru/get?format=json&number=1')
-      .then(response => (this.info = response));
+      .then(response => (this.info = response.data.text));
   }
 }
 Vue.createApp(MyApi).mount('#app1')
