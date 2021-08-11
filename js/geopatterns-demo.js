@@ -10,7 +10,9 @@ function random_int(max) {
 }
 
 function random_phrase() {
-    return axios.get('https://fish-text.ru/get?format=json&number=1');
+    text: null
+    /*axios.get('https://fish-text.ru/get?format=json&number=1');*/
+    return this.text
 }
 /*
 const MyApi = {
