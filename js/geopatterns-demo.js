@@ -130,4 +130,4 @@ const MyApi = {
   }
 }
 
-Vue.createApp(MyApi).mount('#input')
+Vue.createApp(MyApi).mount('#content')
