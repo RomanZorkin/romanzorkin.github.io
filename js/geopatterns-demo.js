@@ -121,13 +121,13 @@ app.mount('#app');
 const MyApi = {
   data() {
     return {
-      text1: null
+      text: null
     }
   },
   mounted() {
     axios
       .get('https://fish-text.ru/get?format=json&number=1')
-      .then(response => (this.text1 = response.data.text));
+      .then(response => (this.text = response.data.text));
   }
 }
 Vue.createApp(MyApi).mount('#app1')
