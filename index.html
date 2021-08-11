@@ -31,7 +31,7 @@
       },
       mounted() {
         axios
-          .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+          .get('https://q8gkoni0w8.execute-api.us-east-2.amazonaws.com/firs_stage')
           .then(response => (this.info = response));
       }
     });
