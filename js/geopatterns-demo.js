@@ -109,10 +109,10 @@ const GeopatternsApp = {
         }
     },
     mounted() {
-        this.download_background_and_update();
         axios
           .get(RANDOM_TEXT_URL)
           .then(response => (this.text = response.data.text));
+        this.download_background_and_update();
     }
 }
 
