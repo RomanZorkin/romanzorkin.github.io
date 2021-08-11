@@ -1,5 +1,8 @@
 #app, #content {
     height: 100% !important;
+    word-wrap: break-word;
+    word-break: break-all;
+    word-spacing: inherit;    
 }
 
 .image {
@@ -13,10 +16,9 @@
     background: transparent;
     border: none;
     font-size: 6rem;
-    color: black;
+    color: white;
+    /*text-wrap: normal;*/
     text-align: center;
-    word-wrap: break-word;
-    word-break: break-all;
     margin-top: 20%;
 }
 
