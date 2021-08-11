@@ -4,7 +4,7 @@
 // API handled by AWS Lambda
 
 const API_URL = 'https://dqrura49d0.execute-api.us-east-1.amazonaws.com/generate';
-
+/*
 const MyApi = {
   data() {
     return {
@@ -18,7 +18,7 @@ const MyApi = {
   }
 }
 
-/*Vue.createApp(MyApi).mount('#input')*/
+Vue.createApp(MyApi).mount('#input')*/
 
 function random_int(max) {
     return Math.floor(Math.random() * max);
@@ -32,7 +32,7 @@ const GeopatternsApp = {
                 'plaid', 'plus_signs', 'rings', 'sinewaves', 'squares',
                 'triangles', 'xes',
             ],
-            text: MyApi,
+            text: 'Type something ☺',
             method: 0,
             style: ''
         }
