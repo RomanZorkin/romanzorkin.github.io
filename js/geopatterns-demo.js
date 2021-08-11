@@ -2,6 +2,7 @@
 // Feel free to submit pull requests!
 
 // API handled by AWS Lambda
+/*
 const API_URL = 'https://dqrura49d0.execute-api.us-east-1.amazonaws.com/generate';
 
 
@@ -116,7 +117,7 @@ const GeopatternsApp = {
 const app = Vue.createApp(GeopatternsApp)
 
 app.mount('#app');
-
+*/
 const MyApi = {
   data() {
     return {
