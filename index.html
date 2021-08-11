@@ -32,11 +32,29 @@
         </div>
     </div>
 </div>
+<div id="app1">
+
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://unpkg.com/vue@next"></script>
 <script src="js/geopatterns-demo.js"></script>
+<script>
+    new Vue({
+      el: '#app1',
+      data() {
+        return {
+          info: null
+        };
+      },
+      mounted() {
+        axios
+          .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+          .then(response => (this.info = response));
+      }
+    });
+</script>
 </body>
 </html>
