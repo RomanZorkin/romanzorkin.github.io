@@ -18,8 +18,8 @@ const MyApi = {
   }
 }
 
-Vue.createApp(MyApi).mount('#app')
-/*
+/*Vue.createApp(MyApi).mount('#input')*/
+
 function random_int(max) {
     return Math.floor(Math.random() * max);
 }
@@ -32,7 +32,7 @@ const GeopatternsApp = {
                 'plaid', 'plus_signs', 'rings', 'sinewaves', 'squares',
                 'triangles', 'xes',
             ],
-            text: 'Type something ☺',
+            text: MyApi,
             method: 0,
             style: ''
         }
@@ -131,4 +131,3 @@ const GeopatternsApp = {
 const app = Vue.createApp(GeopatternsApp)
 
 app.mount('#app');
-*/
