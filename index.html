@@ -131,20 +131,86 @@
                 height: auto;
                 position: static;
                 box-shadow: none;
+                padding: 10px;
+                text-align: center;
+            }
+            .sidebar h2 {
+                font-size: 1.2em;
+                margin-bottom: 10px;
+            }
+            .sidebar a {
+                font-size: 1em;
+                margin: 8px 0;
             }
             .main-content {
                 margin-left: 0;
                 width: 100%;
+                padding: 10px;
+            }
+            .container {
+                padding: 10px;
             }
             .hero h1 {
                 font-size: 1.5em;
-            }
-            .hero p, .about p, .projects li, .contacts p, .contacts a {
-                font-size: 0.9em;
                 margin-left: 10px;
+            }
+            .hero p, .about p, .projects p, .projects li, .contacts p, .contacts a {
+                font-size: 1em;
+                margin-left: 10px;
+                line-height: 1.5;
             }
             .about h2, .projects h2, .contacts h2 {
+                font-size: 1.3em;
                 margin-left: 10px;
+            }
+            .about li, .projects li {
+                margin: 10px 0;
+            }
+            .projects li i, .about li i {
+                font-size: 1.2em;
+            }
+            .contacts a {
+                margin: 15px 0 15px 10px;
+            }
+            .contacts a i {
+                font-size: 1.2em;
+            }
+            .footer {
+                margin-left: 10px;
+                font-size: 0.85em;
+            }
+        }
+        @media (max-width: 480px) {
+            .sidebar {
+                padding: 8px;
+            }
+            .sidebar h2 {
+                font-size: 1.1em;
+            }
+            .sidebar a {
+                font-size: 0.9em;
+                margin: 6px 0;
+            }
+            .hero h1 {
+                font-size: 1.3em;
+            }
+            .hero p, .about p, .projects p, .projects li, .contacts p, .contacts a {
+                font-size: 0.95em;
+                margin-left: 8px;
+            }
+            .about h2, .projects h2, .contacts h2 {
+                font-size: 1.2em;
+                margin-left: 8px;
+            }
+            .projects li i, .about li i, .contacts a i {
+                font-size: 1.1em;
+            }
+            .container {
+                padding: 8px;
+            }
+            .footer {
+                margin-left: 8px;
+                font-size: 0.8em;
             }
         }
     </style>
