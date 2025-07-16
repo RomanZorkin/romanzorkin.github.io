@@ -49,15 +49,16 @@
             padding: 20px;
             width: calc(100% - 220px);
             position: relative;
+            min-height: 100vh;
         }
         .black-hole-canvas {
             position: fixed;
             top: 0;
             left: 220px;
             width: calc(100% - 220px);
-            height: 100vh;
+            height: 100%;
             z-index: 0;
-            opacity: 0.4;
+            opacity: 0.5;
             pointer-events: none;
         }
         .container {
@@ -135,7 +136,7 @@
             margin-right: 5px;
         }
         .footer {
-            padding: 20px;
+            padding:  ascended;
             font-size: 0.9em;
             color: #333;
             margin: 0 0 0 20px;
@@ -223,16 +224,6 @@
                 font-size: 1.2em;
                 margin-left: 8px;
             }
-            .projects li i, .about li i, .contacts a i {
-                font-size: 1.1em;
-            }
-            .container {
-                padding: 8px;
-            }
-            .footer {
-                margin-left: 8px;
-                font-size: 0.8em;
-            }
         }
     </style>
 </head>
@@ -277,7 +268,7 @@
                     <i class="fas fa-comment-dots"></i> 
                     <a href="https://github.com/RomanZorkin/talkbot" class="project-link" target="_blank"><strong>TalkBot</strong></a>: Чат-бот с NLP для автоматизации общения. 
                     Основные инструменты: 
-                    <span class="red-text">transformers</span>, 
+                    <span class=" red-text">transformers</span>, 
                     <span class="red-text">sentence-transformers</span>, 
                     <span class="red-text">torch</span>, 
                     <span class="red-text">fastapi</span>, 
@@ -325,7 +316,12 @@
         const canvas = document.getElementById('blackHoleCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Set canvas size
+        if (!ctx) {
+            console.error('Контекст canvas не поддерживается');
+            return;
+        }
+
+        // Установка размеров canvas
         function resizeCanvas() {
             canvas.width = window.innerWidth - 220;
             canvas.height = window.innerHeight;
@@ -336,18 +332,18 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // Black hole properties
+        // Свойства черной дыры
         let x = canvas.width / 2;
         let y = canvas.height / 2;
         let vx = (Math.random() - 0.5) * 1.5;
         let vy = (Math.random() - 0.5) * 1.5;
-        const eventHorizonRadius = 50;
-        const accretionDiskRadius = 100;
+        let eventHorizonRadius = 50;
+        let accretionDiskRadius = 100;
 
         function drawBlackHole() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Event horizon (dark core)
+            // Горизонт событий (темное ядро)
             const coreGradient = ctx.createRadialGradient(x, y, 0, x, y, eventHorizonRadius);
             coreGradient.addColorStop(0, 'rgba(0, 0, 0, 0.9)');
             coreGradient.addColorStop(0.8, 'rgba(0, 0, 0, 0.7)');
@@ -355,15 +351,15 @@
 
             ctx.beginPath();
             ctx.arc(x, y, eventHorizonRadius, 0, Math.PI * 2);
-            stanno.fillStyle = coreGradient;
+            ctx.fillStyle = coreGradient;
             ctx.fill();
 
-            // Accretion disk (glowing ring)
+            // Аккреционный диск (сияющее кольцо)
             const diskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius, x, y, accretionDiskRadius);
             diskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-            diskGradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.3)');
-            diskGradient.addColorStop(0.6, 'rgba(255, 150, 50, 0.5)');
-            diskGradient.addColorStop(0.9, 'rgba(255, 100, 0, 0.2)');
+            diskGradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.4)');
+            diskGradient.addColorStop(0.6, 'rgba(255, 150, 50, 0.6)');
+            diskGradient.addColorStop(0.9, 'rgba(255, 100, 0, 0.3)');
             diskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
             ctx.beginPath();
@@ -371,10 +367,10 @@
             ctx.fillStyle = diskGradient;
             ctx.fill();
 
-            // Gravitational lensing effect (subtle distortion)
+            // Эффект гравитационного линзирования
             const lensGradient = ctx.createRadialGradient(x, y, accretionDiskRadius, x, y, accretionDiskRadius * 1.5);
             lensGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-            lensGradient.addColorStop(0.5, 'rgba(50, 50, 100, 0.1)');
+            lensGradient.addColorStop(0.5, 'rgba(50, 50, 100, 0.15)');
             lensGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
             ctx.beginPath();
@@ -384,11 +380,11 @@
         }
 
         function updateBlackHole() {
-            // Update position
+            // Обновление позиции
             x += vx;
             y += vy;
 
-            // Bounce off edges with boundary checks
+            // Отражение от краев
             if (x - accretionDiskRadius < 0 || x + accretionDiskRadius > canvas.width) {
                 vx = -vx;
                 x = Math.max(accretionDiskRadius, Math.min(canvas.width - accretionDiskRadius, x));
@@ -398,20 +394,23 @@
                 y = Math.max(accretionDiskRadius, Math.min(canvas.height - accretionDiskRadius, y));
             }
 
-            // Pulsating effect for accretion disk
+            // Эффект пульсации
             const pulse = Math.sin(Date.now() * 0.001) * 5;
             accretionDiskRadius = 100 + pulse;
 
             drawBlackHole();
         }
 
-        // Animation loop
+        // Цикл анимации
         function animate() {
             updateBlackHole();
             requestAnimationFrame(animate);
         }
 
-        animate();
+        // Запуск анимации
+        if (ctx) {
+            animate();
+        }
     </script>
 </body>
 </html>
