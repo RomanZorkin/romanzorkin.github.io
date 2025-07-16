@@ -15,6 +15,7 @@
             background-color: #f5f5f5;
             color: #333;
             display: flex;
+            overflow-x: hidden;
         }
         .sidebar {
             width: 200px;
@@ -25,6 +26,7 @@
             left: 0;
             padding: 20px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 2;
         }
         .sidebar h2 {
             font-family: 'Inter', sans-serif;
@@ -46,16 +48,29 @@
             margin-left: 220px;
             padding: 20px;
             width: calc(100% - 220px);
+            position: relative;
+        }
+        .black-hole-canvas {
+            position: fixed;
+            top: 0;
+            left: 220px;
+            width: calc(100% - 220px);
+            height: 100vh;
+            z-index: 0;
+            opacity: 0.4;
+            pointer-events: none;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
         .hero, .about, .projects, .contacts {
             padding: 40px 20px;
             margin-bottom: 40px;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.95);
             color: #333;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -124,6 +139,8 @@
             font-size: 0.9em;
             color: #333;
             margin: 0 0 0 20px;
+            position: relative;
+            z-index: 1;
         }
         @media (max-width: 768px) {
             .sidebar {
@@ -146,6 +163,10 @@
                 margin-left: 0;
                 width: 100%;
                 padding: 10px;
+            }
+            .black-hole-canvas {
+                left: 0;
+                width: 100%;
             }
             .container {
                 padding: 10px;
@@ -227,6 +248,7 @@
 
     <!-- Main Content -->
     <div class="main-content">
+        <canvas id="blackHoleCanvas" class="black-hole-canvas"></canvas>
         <!-- Hero Section -->
         <section id="hero" class="hero">
             <h1>Роман Зорькин</h1>
@@ -298,5 +320,98 @@
             <p>© Роман Зорькин, 2025. Сделано с Python.</p>
         </footer>
     </div>
+
+    <script>
+        const canvas = document.getElementById('blackHoleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth - 220;
+            canvas.height = window.innerHeight;
+            if (window.innerWidth <= 768) {
+                canvas.width = window.innerWidth;
+            }
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Black hole properties
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+        let vx = (Math.random() - 0.5) * 1.5;
+        let vy = (Math.random() - 0.5) * 1.5;
+        const eventHorizonRadius = 50;
+        const accretionDiskRadius = 100;
+
+        function drawBlackHole() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Event horizon (dark core)
+            const coreGradient = ctx.createRadialGradient(x, y, 0, x, y, eventHorizonRadius);
+            coreGradient.addColorStop(0, 'rgba(0, 0, 0, 0.9)');
+            coreGradient.addColorStop(0.8, 'rgba(0, 0, 0, 0.7)');
+            coreGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+            ctx.beginPath();
+            ctx.arc(x, y, eventHorizonRadius, 0, Math.PI * 2);
+            stanno.fillStyle = coreGradient;
+            ctx.fill();
+
+            // Accretion disk (glowing ring)
+            const diskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius, x, y, accretionDiskRadius);
+            diskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+            diskGradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.3)');
+            diskGradient.addColorStop(0.6, 'rgba(255, 150, 50, 0.5)');
+            diskGradient.addColorStop(0.9, 'rgba(255, 100, 0, 0.2)');
+            diskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+            ctx.beginPath();
+            ctx.arc(x, y, accretionDiskRadius, 0, Math.PI * 2);
+            ctx.fillStyle = diskGradient;
+            ctx.fill();
+
+            // Gravitational lensing effect (subtle distortion)
+            const lensGradient = ctx.createRadialGradient(x, y, accretionDiskRadius, x, y, accretionDiskRadius * 1.5);
+            lensGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            lensGradient.addColorStop(0.5, 'rgba(50, 50, 100, 0.1)');
+            lensGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+            ctx.beginPath();
+            ctx.arc(x, y, accretionDiskRadius * 1.5, 0, Math.PI * 2);
+            ctx.fillStyle = lensGradient;
+            ctx.fill();
+        }
+
+        function updateBlackHole() {
+            // Update position
+            x += vx;
+            y += vy;
+
+            // Bounce off edges with boundary checks
+            if (x - accretionDiskRadius < 0 || x + accretionDiskRadius > canvas.width) {
+                vx = -vx;
+                x = Math.max(accretionDiskRadius, Math.min(canvas.width - accretionDiskRadius, x));
+            }
+            if (y - accretionDiskRadius < 0 || y + accretionDiskRadius > canvas.height) {
+                vy = -vy;
+                y = Math.max(accretionDiskRadius, Math.min(canvas.height - accretionDiskRadius, y));
+            }
+
+            // Pulsating effect for accretion disk
+            const pulse = Math.sin(Date.now() * 0.001) * 5;
+            accretionDiskRadius = 100 + pulse;
+
+            drawBlackHole();
+        }
+
+        // Animation loop
+        function animate() {
+            updateBlackHole();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
 </body>
 </html>
