@@ -332,7 +332,7 @@
     </div>
 
     <script>
-    function initBlackHole() {
+   function initBlackHole() {
     const canvas = document.getElementById('blackHoleCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -348,6 +348,7 @@
     let vy = (Math.random() - 0.5) * 1.5;
     let eventHorizonRadius = 50;
     let accretionDiskRadius = 100;
+    let rotationAngle = 0; // Для вращения диска
 
     // Установка размеров canvas
     function resizeCanvas() {
@@ -369,19 +370,19 @@
     function drawBlackHole() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Гравитационное линзирование (гало эффект)
-        const lensGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 1.2, x, y, accretionDiskRadius * 2);
+        // Гравитационное линзирование (внешний гало-эффект)
+        const lensGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 1.2, x, y, accretionDiskRadius * 2.2);
         lensGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        lensGradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.1)');
-        lensGradient.addColorStop(0.7, 'rgba(255, 150, 50, 0.2)');
+        lensGradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.15)');
+        lensGradient.addColorStop(0.7, 'rgba(255, 150, 50, 0.25)');
         lensGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
         ctx.beginPath();
-        ctx.arc(x, y, accretionDiskRadius * 2, 0, Math.PI * 2);
+        ctx.arc(x, y, accretionDiskRadius * 2.2, 0, Math.PI * 2);
         ctx.fillStyle = lensGradient;
         ctx.fill();
 
-        // Аккреционный диск (основной слой)
+        // Аккреционный диск (основной слой с допплеровским эффектом)
         const diskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius, x, y, accretionDiskRadius * 1.5);
         diskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
         diskGradient.addColorStop(0.2, 'rgba(255, 200, 100, 0.5)');
@@ -394,19 +395,35 @@
         ctx.fillStyle = diskGradient;
         ctx.fill();
 
-        // Дополнительный слой аккреционного диска для асимметрии
-        const diskGradient2 = ctx.createRadialGradient(x, y, eventHorizonRadius * 0.8, x, y, accretionDiskRadius * 1.7);
-        diskGradient2.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        diskGradient2.addColorStop(0.3, 'rgba(255, 180, 80, 0.4)');
-        diskGradient2.addColorStop(0.6, 'rgba(255, 120, 30, 0.6)');
-        diskGradient2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        // Допплеровский эффект: синяя (приближающаяся) сторона
+        const blueDiskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 0.8, x, y, accretionDiskRadius * 1.7);
+        blueDiskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        blueDiskGradient.addColorStop(0.3, 'rgba(150, 200, 255, 0.4)'); // Голубой оттенок
+        blueDiskGradient.addColorStop(0.6, 'rgba(100, 150, 255, 0.6)');
+        blueDiskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
         ctx.save();
         ctx.translate(x, y);
-        ctx.rotate(Math.PI / 4); // Асимметрия диска
+        ctx.rotate(rotationAngle + Math.PI / 4); // Вращение для асимметрии
         ctx.beginPath();
-        ctx.ellipse(0, 0, accretionDiskRadius * 1.7, accretionDiskRadius * 1.3, 0, 0, Math.PI * 2);
-        ctx.fillStyle = diskGradient2;
+        ctx.ellipse(0, 0, accretionDiskRadius * 1.7, accretionDiskRadius * 1.3, 0, 0, Math.PI);
+        ctx.fillStyle = blueDiskGradient;
+        ctx.fill();
+        ctx.restore();
+
+        // Допплеровский эффект: красная (удаляющаяся) сторона
+        const redDiskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 0.8, x, y, accretionDiskRadius * 1.7);
+        redDiskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        redDiskGradient.addColorStop(0.3, 'rgba(255, 100, 50, 0.4)'); // Красноватый оттенок
+        redDiskGradient.addColorStop(0.6, 'rgba(255, 50, 0, 0.6)');
+        redDiskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rotationAngle + Math.PI / 4 + Math.PI); // Противоположная сторона
+        ctx.beginPath();
+        ctx.ellipse(0, 0, accretionDiskRadius * 1.7, accretionDiskRadius * 1.3, 0, 0, Math.PI);
+        ctx.fillStyle = redDiskGradient;
         ctx.fill();
         ctx.restore();
 
@@ -440,6 +457,9 @@
         // Эффект пульсации
         const pulse = Math.sin(Date.now() * 0.001) * 5;
         accretionDiskRadius = 100 + pulse;
+
+        // Обновление вращения для допплеровского эффекта
+        rotationAngle += 0.01; // Медленное вращение диска
 
         drawBlackHole();
     }
