@@ -76,7 +76,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .hero h1 {
-            font-family: spännande;
+            font-family: 'Inter', sans-serif;
             font-size: 2em;
             margin: 0 0 10px 20px;
         }
@@ -98,6 +98,14 @@
         .about li, .projects li {
             margin: 15px 0;
             font-size: 1em;
+        }
+        .about li a, .projects li a {
+            color: #00aaff;
+            text-decoration: none;
+        }
+        .about li a:hover, .projects li a:hover {
+            color: #2565ae;
+            text-decoration: underline;
         }
         .projects li i, .about li i {
             margin-right: 10px;
@@ -174,16 +182,16 @@
             }
             .hero h1 {
                 font-size: 1.5em;
-                margin-left: 10px;
+                margin-left: 15px;
             }
             .hero p, .about p, .projects p, .projects li, .contacts p, .contacts a {
                 font-size: 1em;
-                margin-left: 10px;
+                margin-left: 15px;
                 line-height: 1.5;
             }
             .about h2, .projects h2, .contacts h2 {
                 font-size: 1.3em;
-                margin-left: 10px;
+                margin-left: 15px;
             }
             .about li, .projects li {
                 margin: 10px 0;
@@ -192,13 +200,13 @@
                 font-size: 1.2em;
             }
             .contacts a {
-                margin: 15px 0 15px 10px;
+                margin: 15px 0 15px 15px;
             }
             .contacts a i {
                 font-size: 1.2em;
             }
             .footer {
-                margin-left: 10px;
+                margin-left: 15px;
                 font-size: 0.85em;
             }
         }
@@ -215,14 +223,15 @@
             }
             .hero h1 {
                 font-size: 1.3em;
+                margin-left: 12px;
             }
             .hero p, .about p, .projects p, .projects li, .contacts p, .contacts a {
                 font-size: 0.95em;
-                margin-left: 8px;
+                margin-left: 12px;
             }
             .about h2, .projects h2, .contacts h2 {
                 font-size: 1.2em;
-                margin-left: 8px;
+                margin-left: 12px;
             }
             .projects li i, .about li i, .contacts a i {
                 font-size: 1.1em;
@@ -231,7 +240,7 @@
                 padding: 8px;
             }
             .footer {
-                margin-left: 8px;
+                margin-left: 12px;
                 font-size: 0.8em;
             }
         }
@@ -262,11 +271,11 @@
             <h2>Те, кто помогал становиться мне лучше</h2>
             <ul>
                 <li><i class="fas fa-chalkboard-teacher"></i> <strong>Ирина Уланова</strong> - за вдохновение и менторство</li>
-                <li><i class="fas fa-code"></i> <strong>Moscow Python</strong> - <a href="https://moscowpython.ru/" style="color: #00aaff; text-decoration: none;">moscowpython.ru</a></li>
+                <li><i class="fas fa-code"></i> <strong>Moscow Python</strong> - <a href="https://moscowpython.ru/" target="_blank">moscowpython.ru</a></li>
                 <li><i class="fas fa-users"></i> Сообщество <strong>Python Barnaul</strong></li>
-                <li><i class="fas fa-university"></i> <strong>Школа глубинного обучения (DLS)</strong> - <a href="https://dls.samcs.ru/" style="color: #00aaff; text-decoration: none;">dls.samcs.ru</a></li>
-                <li><i class="fas fa-graduation-cap"></i> <strong>Learn Python</strong> - <a href="https://learn.python.ru/" style="color: #00aaff; text-decoration: none;">learn.python.ru</a></li>
-                <li><i class="fas fa-graduation-cap"></i> <strong>АлтГУ ДПО</strong> - <a href="https://dpo.edu.asu.ru/enrol/index.php?id=1527" style="color: #00aaff; text-decoration: none;">dpo.edu.asu.ru</a></li>
+                <li><i class="fas fa-university"></i> <strong>Школа глубинного обучения (DLS)</strong> - <a href="https://dls.samcs.ru/" target="_blank">dls.samcs.ru</a></li>
+                <li><i class="fas fa-graduation-cap"></i> <strong>Learn Python</strong> - <a href="https://learn.python.ru/" target="_blank">learn.python.ru</a></li>
+                <li><i class="fas fa-graduation-cap"></i> <strong>АлтГУ ДПО</strong> - <a href="https://dpo.edu.asu.ru/enrol/index.php?id=1527" target="_blank">dpo.edu.asu.ru</a></li>
             </ul>
         </section>
 
@@ -311,14 +320,14 @@
         <!-- Contacts Section -->
         <section id="contacts" class="contacts container">
             <h2>Вы можете мне написать</h2>
-            <a href="mailto:zorkin.roman@gmail.com"><i class="fas fa-envelope"></i> zorkin.roman@gmail.com</a>
-            <a href="https://t.me/Zorkin_Roman"><i class="fab fa-telegram-plane"></i> Telegram</a>
-            <a href="https://github.com/RomanZorkin"><i class="fab fa-github"></i> GitHub</a>
+            <a href="mailto:zorkin.roman@gmail.com" target="_blank"><i class="fas fa-envelope"></i> zorkin.roman@gmail.com</a>
+            <a href="https://t.me/Zorkin_Roman" target="_blank"><i class="fab fa-telegram-plane"></i> Telegram</a>
+            <a href="https://github.com/RomanZorkin" target="_blank"><i class="fab fa-github"></i> GitHub</a>
         </section>
 
         <!-- Footer -->
         <footer class="footer">
-            <p>© Роман Зорькин, 2025. Сделано с Python.</p>
+            <p>© Роман Зорькин, 2025. Сделано с ❤️ и Python.</p>
         </footer>
     </div>
 
@@ -346,6 +355,9 @@
             canvas.height = window.innerHeight;
             if (window.innerWidth <= 768) {
                 canvas.width = window.innerWidth;
+                canvas.style.left = '0px'; // Синхронизация с CSS
+            } else {
+                canvas.style.left = '220px'; // Восстановить позицию для десктопа
             }
             // Инициализируем позицию черной дыры
             x = canvas.width / 2;
@@ -429,4 +441,6 @@
 
     // Запускаем инициализацию после загрузки DOM
     window.addEventListener('load', initBlackHole);
-</script>
+    </script>
+</body>
+</html>
