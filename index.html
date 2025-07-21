@@ -350,23 +350,6 @@
     let accretionDiskRadius = 100;
     let rotationAngle = 0; // Для вращения диска
 
-    // Создание текстуры для аккреционного диска
-    function createTexture() {
-        const textureCanvas = document.createElement('canvas');
-        textureCanvas.width = 256;
-        textureCanvas.height = 256;
-        const tCtx = textureCanvas.getContext('2d');
-        for (let tx = 0; tx < 256; tx++) {
-            for (let ty = 0; ty < 256; ty++) {
-                const noise = Math.random() * 0.15 + 0.85; // Мягкий шум
-                tCtx.fillStyle = `rgba(255, 255, 255, ${noise})`;
-                tCtx.fillRect(tx, ty, 1, 1);
-            }
-        }
-        return textureCanvas;
-    }
-    const texture = createTexture();
-
     // Установка размеров canvas
     function resizeCanvas() {
         canvas.width = window.innerWidth - 220;
@@ -387,12 +370,11 @@
     function drawBlackHole() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Гравитационное линзирование и Эйнштейновское кольцо (объединены)
+        // Гравитационное линзирование (гало-эффект)
         const lensGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 1.1, x, y, accretionDiskRadius * 2);
         lensGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
         lensGradient.addColorStop(0.2, 'rgba(255, 180, 100, 0.1)');
-        lensGradient.addColorStop(0.4, 'rgba(255, 150, 80, 0.2)');
-        lensGradient.addColorStop(0.6, 'rgba(255, 120, 50, 0.15)');
+        lensGradient.addColorStop(0.5, 'rgba(255, 150, 80, 0.2)');
         lensGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
         ctx.beginPath();
@@ -404,26 +386,19 @@
         const diskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius, x, y, accretionDiskRadius * 1.5);
         diskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
         diskGradient.addColorStop(0.2, 'rgba(255, 200, 120, 0.4)');
-        diskGradient.addColorStop(0.4, 'rgba(255, 160, 80, 0.6)');
-        diskGradient.addColorStop(0.6, 'rgba(255, 120, 50, 0.5)');
+        diskGradient.addColorStop(0.5, 'rgba(255, 160, 80, 0.6)');
         diskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
-        ctx.save();
-        ctx.globalCompositeOperation = 'source-over';
         ctx.beginPath();
         ctx.arc(x, y, accretionDiskRadius * 1.5, 0, Math.PI * 2);
         ctx.fillStyle = diskGradient;
         ctx.fill();
-        // Наложение текстуры
-        ctx.globalCompositeOperation = 'soft-light';
-        ctx.drawImage(texture, x - accretionDiskRadius * 1.5, y - accretionDiskRadius * 1.5, accretionDiskRadius * 3, accretionDiskRadius * 3);
-        ctx.restore();
 
-        // Светящаяся линия через центр
+        // Поперечная светящаяся линия
         const lineGradient = ctx.createLinearGradient(x - accretionDiskRadius * 1.5, y, x + accretionDiskRadius * 1.5, y);
         lineGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
         lineGradient.addColorStop(0.3, 'rgba(255, 200, 150, 0.5)');
-        lineGradient.addColorStop(0.5, 'rgba(255, 220, 180, 0.8)');
+        lineGradient.addColorStop(0.5, 'rgba(255, 220, 180, 0.7)');
         lineGradient.addColorStop(0.7, 'rgba(255, 200, 150, 0.5)');
         lineGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
@@ -431,7 +406,7 @@
         ctx.translate(x, y);
         ctx.rotate(rotationAngle);
         ctx.beginPath();
-        ctx.ellipse(0, 0, accretionDiskRadius * 1.5, accretionDiskRadius * 0.15, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, accretionDiskRadius * 1.5, accretionDiskRadius * 0.1, 0, 0, Math.PI * 2);
         ctx.fillStyle = lineGradient;
         ctx.fill();
         ctx.restore();
@@ -440,14 +415,14 @@
         const blueDiskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 0.8, x, y, accretionDiskRadius * 1.6);
         blueDiskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
         blueDiskGradient.addColorStop(0.3, 'rgba(150, 200, 255, 0.3)');
-        blueDiskGradient.addColorStop(0.6, 'rgba(100, 150, 255, 0.5)');
+        blueDiskGradient.addColorStop(0.6, 'rgba(100, 150, 255, 0.4)');
         blueDiskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate(rotationAngle + Math.PI / 4);
         ctx.beginPath();
-        ctx.ellipse(0, 0, accretionDiskRadius * 1.6, accretionDiskRadius * 1.2, 0, 0, Math.PI);
+        ctx.arc(0, 0, accretionDiskRadius * 1.6, 0, Math.PI);
         ctx.fillStyle = blueDiskGradient;
         ctx.fill();
         ctx.restore();
@@ -456,14 +431,14 @@
         const redDiskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 0.8, x, y, accretionDiskRadius * 1.6);
         redDiskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
         redDiskGradient.addColorStop(0.3, 'rgba(255, 100, 50, 0.3)');
-        redDiskGradient.addColorStop(0.6, 'rgba(255, 50, 0, 0.5)');
+        redDiskGradient.addColorStop(0.6, 'rgba(255, 50, 0, 0.4)');
         redDiskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate(rotationAngle + Math.PI / 4 + Math.PI);
         ctx.beginPath();
-        ctx.ellipse(0, 0, accretionDiskRadius * 1.6, accretionDiskRadius * 1.2, 0, 0, Math.PI);
+        ctx.arc(0, 0, accretionDiskRadius * 1.6, 0, Math.PI);
         ctx.fillStyle = redDiskGradient;
         ctx.fill();
         ctx.restore();
@@ -499,8 +474,8 @@
         const pulse = Math.sin(Date.now() * 0.001) * 5;
         accretionDiskRadius = 100 + pulse;
 
-        // Обновление вращения для допплеровского эффекта
-        rotationAngle += 0.008; // Медленное вращение для плавности
+        // Обновление вращения для допплеровского эффекта и линии
+        rotationAngle += 0.008;
 
         drawBlackHole();
     }
