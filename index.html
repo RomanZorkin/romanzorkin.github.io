@@ -333,114 +333,129 @@
 
     <script>
     function initBlackHole() {
-        const canvas = document.getElementById('blackHoleCanvas');
-        const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById('blackHoleCanvas');
+    const ctx = canvas.getContext('2d');
 
-        if (!ctx) {
-            console.error('Контекст canvas не поддерживается');
-            return;
-        }
-
-        // Объявляем и инициализируем переменные
-        let x = 0; // Начальные значения будут переопределены в resizeCanvas
-        let y = 0;
-        let vx = (Math.random() - 0.5) * 1.5;
-        let vy = (Math.random() - 0.5) * 1.5;
-        let eventHorizonRadius = 50;
-        let accretionDiskRadius = 100;
-
-        // Установка размеров canvas
-        function resizeCanvas() {
-            canvas.width = window.innerWidth - 220;
-            canvas.height = window.innerHeight;
-            if (window.innerWidth <= 768) {
-                canvas.width = window.innerWidth;
-                canvas.style.left = '0px'; // Синхронизация с CSS
-            } else {
-                canvas.style.left = '220px'; // Восстановить позицию для десктопа
-            }
-            // Инициализируем позицию черной дыры
-            x = canvas.width / 2;
-            y = canvas.height / 2;
-            // Повторный вызов отрисовки после изменения размера
-            drawBlackHole();
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        function drawBlackHole() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Горизонт событий (темное ядро)
-            const coreGradient = ctx.createRadialGradient(x, y, 0, x, y, eventHorizonRadius);
-            coreGradient.addColorStop(0, 'rgba(0, 0, 0, 0.9)');
-            coreGradient.addColorStop(0.8, 'rgba(0, 0, 0, 0.7)');
-            coreGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-            ctx.beginPath();
-            ctx.arc(x, y, eventHorizonRadius, 0, Math.PI * 2);
-            ctx.fillStyle = coreGradient;
-            ctx.fill();
-
-            // Аккреционный диск (сияющее кольцо)
-            const diskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius, x, y, accretionDiskRadius);
-            diskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-            diskGradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.4)');
-            diskGradient.addColorStop(0.6, 'rgba(255, 150, 50, 0.6)');
-            diskGradient.addColorStop(0.9, 'rgba(255, 100, 0, 0.3)');
-            diskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-            ctx.beginPath();
-            ctx.arc(x, y, accretionDiskRadius, 0, Math.PI * 2);
-            ctx.fillStyle = diskGradient;
-            ctx.fill();
-
-            // Эффект гравитационного линзирования
-            const lensGradient = ctx.createRadialGradient(x, y, accretionDiskRadius, x, y, accretionDiskRadius * 1.5);
-            lensGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-            lensGradient.addColorStop(0.5, 'rgba(50, 50, 100, 0.15)');
-            lensGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-            ctx.beginPath();
-            ctx.arc(x, y, accretionDiskRadius * 1.5, 0, Math.PI * 2);
-            ctx.fillStyle = lensGradient;
-            ctx.fill();
-        }
-
-        function updateBlackHole() {
-            // Обновление позиции
-            x += vx;
-            y += vy;
-
-            // Отражение от краев
-            if (x - accretionDiskRadius < 0 || x + accretionDiskRadius > canvas.width) {
-                vx = -vx;
-                x = Math.max(accretionDiskRadius, Math.min(canvas.width - accretionDiskRadius, x));
-            }
-            if (y - accretionDiskRadius < 0 || y + accretionDiskRadius > canvas.height) {
-                vy = -vy;
-                y = Math.max(accretionDiskRadius, Math.min(canvas.height - accretionDiskRadius, y));
-            }
-
-            // Эффект пульсации
-            const pulse = Math.sin(Date.now() * 0.001) * 5;
-            accretionDiskRadius = 100 + pulse;
-
-            drawBlackHole();
-        }
-
-        // Цикл анимации
-        function animate() {
-            updateBlackHole();
-            requestAnimationFrame(animate);
-        }
-
-        // Запуск анимации
-        animate();
+    if (!ctx) {
+        console.error('Контекст canvas не поддерживается');
+        return;
     }
 
-    // Запускаем инициализацию после загрузки DOM
-    window.addEventListener('load', initBlackHole);
+    // Инициализация переменных
+    let x = 0; // Будет переопределен в resizeCanvas
+    let y = 0;
+    let vx = (Math.random() - 0.5) * 1.5;
+    let vy = (Math.random() - 0.5) * 1.5;
+    let eventHorizonRadius = 50;
+    let accretionDiskRadius = 100;
+
+    // Установка размеров canvas
+    function resizeCanvas() {
+        canvas.width = window.innerWidth - 220;
+        canvas.height = window.innerHeight;
+        if (window.innerWidth <= 768) {
+            canvas.width = window.innerWidth;
+            canvas.style.left = '0px';
+        } else {
+            canvas.style.left = '220px';
+        }
+        x = canvas.width / 2;
+        y = canvas.height / 2;
+        drawBlackHole();
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawBlackHole() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Гравитационное линзирование (гало эффект)
+        const lensGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 1.2, x, y, accretionDiskRadius * 2);
+        lensGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        lensGradient.addColorStop(0.3, 'rgba(255, 200, 100, 0.1)');
+        lensGradient.addColorStop(0.7, 'rgba(255, 150, 50, 0.2)');
+        lensGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+        ctx.beginPath();
+        ctx.arc(x, y, accretionDiskRadius * 2, 0, Math.PI * 2);
+        ctx.fillStyle = lensGradient;
+        ctx.fill();
+
+        // Аккреционный диск (основной слой)
+        const diskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius, x, y, accretionDiskRadius * 1.5);
+        diskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        diskGradient.addColorStop(0.2, 'rgba(255, 200, 100, 0.5)');
+        diskGradient.addColorStop(0.4, 'rgba(255, 150, 50, 0.7)');
+        diskGradient.addColorStop(0.6, 'rgba(255, 100, 0, 0.5)');
+        diskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+        ctx.beginPath();
+        ctx.arc(x, y, accretionDiskRadius * 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = diskGradient;
+        ctx.fill();
+
+        // Дополнительный слой аккреционного диска для асимметрии
+        const diskGradient2 = ctx.createRadialGradient(x, y, eventHorizonRadius * 0.8, x, y, accretionDiskRadius * 1.7);
+        diskGradient2.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        diskGradient2.addColorStop(0.3, 'rgba(255, 180, 80, 0.4)');
+        diskGradient2.addColorStop(0.6, 'rgba(255, 120, 30, 0.6)');
+        diskGradient2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(Math.PI / 4); // Асимметрия диска
+        ctx.beginPath();
+        ctx.ellipse(0, 0, accretionDiskRadius * 1.7, accretionDiskRadius * 1.3, 0, 0, Math.PI * 2);
+        ctx.fillStyle = diskGradient2;
+        ctx.fill();
+        ctx.restore();
+
+        // Тень черной дыры (горизонт событий)
+        const coreGradient = ctx.createRadialGradient(x, y, 0, x, y, eventHorizonRadius);
+        coreGradient.addColorStop(0, 'rgba(0, 0, 0, 1)');
+        coreGradient.addColorStop(0.9, 'rgba(0, 0, 0, 0.95)');
+        coreGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+        ctx.beginPath();
+        ctx.arc(x, y, eventHorizonRadius, 0, Math.PI * 2);
+        ctx.fillStyle = coreGradient;
+        ctx.fill();
+    }
+
+    function updateBlackHole() {
+        // Обновление позиции
+        x += vx;
+        y += vy;
+
+        // Отражение от краев
+        if (x - accretionDiskRadius < 0 || x + accretionDiskRadius > canvas.width) {
+            vx = -vx;
+            x = Math.max(accretionDiskRadius, Math.min(canvas.width - accretionDiskRadius, x));
+        }
+        if (y - accretionDiskRadius < 0 || y + accretionDiskRadius > canvas.height) {
+            vy = -vy;
+            y = Math.max(accretionDiskRadius, Math.min(canvas.height - accretionDiskRadius, y));
+        }
+
+        // Эффект пульсации
+        const pulse = Math.sin(Date.now() * 0.001) * 5;
+        accretionDiskRadius = 100 + pulse;
+
+        drawBlackHole();
+    }
+
+    // Цикл анимации
+    function animate() {
+        updateBlackHole();
+        requestAnimationFrame(animate);
+    }
+
+    // Запуск анимации
+    animate();
+}
+
+// Запускаем инициализацию после загрузки DOM
+window.addEventListener('load', initBlackHole);
     </script>
 </body>
 </html>
