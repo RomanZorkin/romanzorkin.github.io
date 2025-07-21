@@ -332,7 +332,7 @@
     </div>
 
     <script>
-  function initBlackHole() {
+function initBlackHole() {
     const canvas = document.getElementById('blackHoleCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -346,19 +346,23 @@
     let y = 0;
     let vx = (Math.random() - 0.5) * 1.5;
     let vy = (Math.random() - 0.5) * 1.5;
-    let eventHorizonRadius = 50;
-    let accretionDiskRadius = 100;
+    let eventHorizonRadius = 50; // Начальное значение для мониторов
+    let accretionDiskRadius = 100; // Начальное значение для мониторов
     let rotationAngle = 0; // Для вращения диска
 
-    // Установка размеров canvas
+    // Установка размеров canvas и адаптация черной дыры
     function resizeCanvas() {
         canvas.width = window.innerWidth - 220;
         canvas.height = window.innerHeight;
         if (window.innerWidth <= 768) {
             canvas.width = window.innerWidth;
             canvas.style.left = '0px';
+            eventHorizonRadius = 30; // Меньший размер для мобильных
+            accretionDiskRadius = 60;
         } else {
             canvas.style.left = '220px';
+            eventHorizonRadius = 50; // Больший размер для мониторов
+            accretionDiskRadius = 100;
         }
         x = canvas.width / 2;
         y = canvas.height / 2;
