@@ -1,501 +1,167 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Лэндинг об увлечении машинным обучением, глубоким обучением и Python">
-    <meta name="keywords" content="машинное обучение, глубокое обучение, Python, Барнаул">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Лэндинг об увлечении машинным обучением, глубоким обучением и Python" />
+    <meta name="keywords" content="машинное обучение, глубокое обучение, Python, Барнаул" />
     <title>Роман Зорькин | Машинное обучение и Python</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        body {
-            margin: 0;
-            font-family: 'Fira Code', monospace;
-            background-color: #f5f5f5;
-            color: #333;
-            display: flex;
-            overflow-x: hidden;
+        /* === БАЗА === */
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{
+            font-family:'Inter',sans-serif;
+            color:#e5e5e5;
+            background:url("https://media1.tenor.com/m/EahTYk4P8AoAAAAd/black-hole.gif") center/cover fixed;
+            line-height:1.7;
+            font-weight:300;
         }
-        .sidebar {
-            width: 200px;
-            background-color: #f5f5f5;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            z-index: 2;
+        a{color:#7dd3fc;text-decoration:none;transition:.2s}
+        a:hover{color:#0ea5e9}
+
+        /* === ВСПЛЫВАЮЩАЯ НАВИГАЦИЯ === */
+        .nav-toggle{
+            position:fixed;top:20px;right:20px;
+            z-index:999;
+            background:rgba(0,0,0,.45);
+            backdrop-filter:blur(8px);
+            border:1px solid rgba(255,255,255,.15);
+            color:#fff;font-size:22px;
+            padding:8px 12px;border-radius:50%;
+            cursor:pointer;
         }
-        .sidebar h2 {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: #00aaff;
+        .nav-panel{
+            position:fixed;top:0;right:-260px;
+            width:240px;height:100%;
+            background:rgba(0,0,0,.55);
+            backdrop-filter:blur(12px);
+            transition:right .35s ease;
+            z-index:998;
+            padding:80px 25px 25px;
+            border-left:1px solid rgba(255,255,255,.15);
         }
-        .sidebar a {
-            display: block;
-            color: #333;
-            text-decoration: none;
-            margin: 10px 0;
-            font-size: 1.1em;
+        .nav-panel.open{right:0}
+        .nav-panel a{
+            display:block;margin:14px 0;font-size:16px;
+            letter-spacing:.5px;
         }
-        .sidebar a:hover {
-            color: #2565ae;
+
+        /* === СЕКЦИИ === */
+        .section{
+            max-width:760px;margin:40px auto;padding:35px 45px;
+            background:rgba(0,0,0,.45);
+            backdrop-filter:blur(10px);
+            border:1px solid rgba(255,255,255,.12);
+            border-radius:12px;
+            box-shadow:0 4px 25px rgba(0,0,0,.35);
+            transition:transform .3s;
         }
-        .main-content {
-            margin-left: 220px;
-            padding: 20px;
-            width: calc(100% - 220px);
-            position: relative;
-            min-height: 100vh;
+        .section:hover{transform:translateY(-3px)}
+        .section h1{
+            font-size:38px;font-weight:600;
+            margin-bottom:12px;color:#ffffff;
         }
-        .black-hole-canvas {
-            position: fixed;
-            top: 0;
-            left: 220px;
-            width: calc(100% - 220px);
-            height: 100%;
-            z-index: 0;
-            opacity: 0.5;
-            pointer-events: none;
+        .section h2{
+            font-size:28px;font-weight:600;
+            margin-bottom:18px;color:#ffffff;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
+        .section p, .section li{
+            font-size:17px;
+            margin-bottom:12px;
+            color:#d1d1d1;
         }
-        .hero, .about, .projects, .contacts {
-            padding: 40px 20px;
-            margin-bottom: 40px;
-            background-color: rgba(255, 255, 255, 0.95);
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        .section ul{list-style:none}
+        .section li i{margin-right:10px;color:#7dd3fc}
+        .red-text{color:#f87171;font-weight:600}
+
+        /* === FOOTER === */
+        footer{
+            text-align:center;
+            padding:25px 15px 40px;
+            font-size:15px;
+            color:#a1a1aa;
         }
-        .hero h1 {
-            font-family: 'Inter', sans-serif;
-            font-size: 2em;
-            margin: 0 0 10px 20px;
-        }
-        .hero p, .about p, .projects p, .contacts p {
-            font-size: 1em;
-            margin: 10px 0 10px 20px;
-            color: #333;
-        }
-        .about h2, .projects h2, .contacts h2 {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.5em;
-            margin: 0 0 20px 20px;
-        }
-        .about ul, .projects ul {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 0 20px;
-        }
-        .about li, .projects li {
-            margin: 15px 0;
-            font-size: 1em;
-        }
-        .about li a, .projects li a {
-            color: #00aaff;
-            text-decoration: none;
-        }
-        .about li a:hover, .projects li a:hover {
-            color: #2565ae;
-            text-decoration: underline;
-        }
-        .projects li i, .about li i {
-            margin-right: 10px;
-            color: #00aaff;
-        }
-        .projects li:hover, .about li:hover {
-            color: #2565ae;
-        }
-        .red-text {
-            color: #ff0000;
-            font-weight: bold;
-        }
-        .project-link {
-            color: #00aaff;
-            text-decoration: none;
-        }
-        .project-link:hover {
-            text-decoration: underline;
-        }
-        .more-projects {
-            font-style: italic;
-            color: #666;
-            margin-top: 20px;
-        }
-        .contacts a {
-            color: #00aaff;
-            text-decoration: none;
-            margin: 10px 0 10px 20px;
-            font-size: 1em;
-            display: block;
-        }
-        .contacts a:hover {
-            color: #2565ae;
-        }
-        .contacts a i {
-            margin-right: 5px;
-        }
-        .footer {
-            padding: 20px;
-            font-size: 0.9em;
-            color: #333;
-            margin: 0 0 0 20px;
-            position: relative;
-            z-index: 1;
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: static;
-                box-shadow: none;
-                padding: 10px;
-                text-align: center;
-            }
-            .sidebar h2 {
-                font-size: 1.2em;
-                margin-bottom: 10px;
-            }
-            .sidebar a {
-                font-size: 1em;
-                margin: 8px 0;
-            }
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-                padding: 10px;
-            }
-            .black-hole-canvas {
-                left: 0;
-                width: 100%;
-            }
-            .container {
-                padding: 10px;
-            }
-            .hero h1 {
-                font-size: 1.5em;
-                margin-left: 15px;
-            }
-            .hero p, .about p, .projects p, .projects li, .contacts p, .contacts a {
-                font-size: 1em;
-                margin-left: 15px;
-                line-height: 1.5;
-            }
-            .about h2, .projects h2, .contacts h2 {
-                font-size: 1.3em;
-                margin-left: 15px;
-            }
-            .about li, .projects li {
-                margin: 10px 0;
-            }
-            .projects li i, .about li i {
-                font-size: 1.2em;
-            }
-            .contacts a {
-                margin: 15px 0 15px 15px;
-            }
-            .contacts a i {
-                font-size: 1.2em;
-            }
-            .footer {
-                margin-left: 15px;
-                font-size: 0.85em;
-            }
-        }
-        @media (max-width: 480px) {
-            .sidebar {
-                padding: 8px;
-            }
-            .sidebar h2 {
-                font-size: 1.1em;
-            }
-            .sidebar a {
-                font-size: 0.9em;
-                margin: 6px 0;
-            }
-            .hero h1 {
-                font-size: 1.3em;
-                margin-left: 12px;
-            }
-            .hero p, .about p, .projects p, .projects li, .contacts p, .contacts a {
-                font-size: 0.95em;
-                margin-left: 12px;
-            }
-            .about h2, .projects h2, .contacts h2 {
-                font-size: 1.2em;
-                margin-left: 12px;
-            }
-            .projects li i, .about li i, .contacts a i {
-                font-size: 1.1em;
-            }
-            .container {
-                padding: 8px;
-            }
-            .footer {
-                margin-left: 12px;
-                font-size: 0.8em;
-            }
+
+        /* === АДАПТИВ === */
+        @media(max-width:768px){
+            .section{margin:25px 15px;padding:25px}
+            .section h1{font-size:32px}
+            .section h2{font-size:24px}
+            .section p,.section li{font-size:16px}
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-        <h2>Роман Зорькин</h2>
-        <a href="#hero">Главная</a>
-        <a href="#about">Те, кто помогал</a>
-        <a href="#projects">Проекты для веселья</a>
-        <a href="#contacts">Написать мне</a>
-    </nav>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <canvas id="blackHoleCanvas" class="black-hole-canvas"></canvas>
-        <!-- Hero Section -->
-        <section id="hero" class="hero">
-            <h1>Роман Зорькин</h1>
-            <p>Бухучета я начальник и финансов командир.</p>
-            <p>Втискиваю анализ данных (машинное обучение, глубокое обучение и Python) в бухгалтерию и финансы через немогу и вопреки.</p>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="about container">
-            <h2>Те, кто помогал становиться мне лучше</h2>
-            <ul>
-                <li><i class="fas fa-chalkboard-teacher"></i> <strong>Ирина Уланова</strong> - за вдохновение и менторство</li>
-                <li><i class="fas fa-code"></i> <strong>Moscow Python</strong> - <a href="https://moscowpython.ru/" target="_blank">moscowpython.ru</a></li>
-                <li><i class="fas fa-users"></i> Сообщество <strong>Python Barnaul</strong></li>
-                <li><i class="fas fa-university"></i> <strong>Школа глубинного обучения (DLS)</strong> - <a href="https://dls.samcs.ru/" target="_blank">dls.samcs.ru</a></li>
-                <li><i class="fas fa-graduation-cap"></i> <strong>Learn Python</strong> - <a href="https://learn.python.ru/" target="_blank">learn.python.ru</a></li>
-                <li><i class="fas fa-graduation-cap"></i> <strong>АлтГУ ДПО</strong> - <a href="https://dpo.edu.asu.ru/enrol/index.php?id=1527" target="_blank">dpo.edu.asu.ru</a></li>
-            </ul>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="projects container">
-            <h2>Проекты для веселья и радости</h2>
-            <ul>
-                <li>
-                    <i class="fas fa-comment-dots"></i> 
-                    <a href="https://github.com/RomanZorkin/talkbot" class="project-link" target="_blank"><strong>TalkBot</strong></a>: Чат-бот с NLP для автоматизации общения. 
-                    Основные инструменты: 
-                    <span class="red-text">transformers</span>, 
-                    <span class="red-text">sentence-transformers</span>, 
-                    <span class="red-text">torch</span>, 
-                    <span class="red-text">fastapi</span>, 
-                    <span class="red-text">uvicorn</span>, 
-                    <span class="red-text">pydantic</span>, 
-                    <span class="red-text">loguru</span>.
-                </li>
-                <li>
-                    <i class="fas fa-map-marker-alt"></i> 
-                    <a href="https://github.com/RomanZorkin/geo_searching" class="project-link" target="_blank"><strong>Geo Searching</strong></a>: Инструмент для анализа геопространственных данных. 
-                    Использую: 
-                    <span class="red-text">Python</span>, 
-                    <span class="red-text">PyTorch</span>, 
-                    <span class="red-text">geopandas</span>, 
-                    <span class="red-text">pandas</span>.
-                </li>
-                <li>
-                    <i class="fas fa-wave-square"></i> 
-                    <a href="https://github.com/RomanZorkin/temblor" class="project-link" target="_blank"><strong>Temblor</strong></a>: Анализ сейсмических данных. 
-                    Технологии: 
-                    <span class="red-text">Python</span>, 
-                    <span class="red-text">PyTorch</span>, 
-                    <span class="red-text">pandas</span>, 
-                    <span class="red-text">scikit-learn</span>.
-                </li>
-            </ul>
-            <p class="more-projects">... и многое другое</p>
-        </section>
-
-        <!-- Contacts Section -->
-        <section id="contacts" class="contacts container">
-            <h2>Вы можете мне написать</h2>
-            <a href="mailto:zorkin.roman@gmail.com" target="_blank"><i class="fas fa-envelope"></i> zorkin.roman@gmail.com</a>
-            <a href="https://t.me/Zorkin_Roman" target="_blank"><i class="fab fa-telegram-plane"></i> Telegram</a>
-            <a href="https://github.com/RomanZorkin" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>© Роман Зорькин, 2025. Сделано с ❤️ и Python.</p>
-        </footer>
+    <!-- кнопка-гамбургер -->
+    <div class="nav-toggle" onclick="toggleNav()">
+        <i class="fas fa-bars"></i>
     </div>
 
+    <!-- панель навигации -->
+    <nav class="nav-panel" id="navPanel">
+        <a href="#hero">Главная</a>
+        <a href="#about">Те, кто помогал</a>
+        <a href="#projects">Проекты</a>
+        <a href="#contacts">Контакты</a>
+    </nav>
+
+    <!-- Секции -->
+    <section id="hero" class="section">
+        <h1>Роман Зорькин</h1>
+        <p>Бухучета я начальник и финансов командир.</p>
+        <p>Втискиваю анализ данных (машинное обучение, глубокое обучение и&nbsp;Python) в&nbsp;бухгалтерию и&nbsp;финансы через немогу и&nbsp;вопреки.</p>
+    </section>
+
+    <section id="about" class="section">
+        <h2>Те, кто помогал становиться мне лучше</h2>
+        <ul>
+            <li><i class="fas fa-chalkboard-teacher"></i><strong>Ирина Уланова</strong> — за вдохновение и&nbsp;менторство</li>
+            <li><i class="fas fa-code"></i><strong>Moscow Python</strong> — <a href="https://moscowpython.ru/" target="_blank">moscowpython.ru</a></li>
+            <li><i class="fas fa-users"></i>Сообщество <strong>Python Barnaul</strong></li>
+            <li><i class="fas fa-university"></i><strong>Школа глубинного обучения (DLS)</strong> — <a href="https://dls.samcs.ru/" target="_blank">dls.samcs.ru</a></li>
+            <li><i class="fas fa-graduation-cap"></i><strong>Learn Python</strong> — <a href="https://learn.python.ru/" target="_blank">learn.python.ru</a></li>
+            <li><i class="fas fa-graduation-cap"></i><strong>АлтГУ ДПО</strong> — <a href="https://dpo.edu.asu.ru/enrol/index.php?id=1527" target="_blank">dpo.edu.asu.ru</a></li>
+        </ul>
+    </section>
+
+    <section id="projects" class="section">
+        <h2>Проекты для веселья и радости</h2>
+        <ul>
+            <li>
+                <i class="fas fa-comment-dots"></i>
+                <a href="https://github.com/RomanZorkin/talkbot" class="project-link" target="_blank"><strong>TalkBot</strong></a>: чат-бот с NLP для автоматизации общения.  
+                Стек: <span class="red-text">transformers</span>, <span class="red-text">sentence-transformers</span>, <span class="red-text">torch</span>, <span class="red-text">fastapi</span>, <span class="red-text">uvicorn</span>, <span class="red-text">pydantic</span>, <span class="red-text">loguru</span>.
+            </li>
+            <li>
+                <i class="fas fa-map-marker-alt"></i>
+                <a href="https://github.com/RomanZorkin/geo_searching" class="project-link" target="_blank"><strong>Geo Searching</strong></a>: инструмент анализа геопространственных данных.  
+                Стек: <span class="red-text">Python</span>, <span class="red-text">PyTorch</span>, <span class="red-text">geopandas</span>, <span class="red-text">pandas</span>.
+            </li>
+            <li>
+                <i class="fas fa-wave-square"></i>
+                <a href="https://github.com/RomanZorkin/temblor" class="project-link" target="_blank"><strong>Temblor</strong></a>: анализ сейсмических данных.  
+                Стек: <span class="red-text">Python</span>, <span class="red-text">PyTorch</span>, <span class="red-text">pandas</span>, <span class="red-text">scikit-learn</span>.
+            </li>
+        </ul>
+        <p style="font-style:italic;color:#9ca3af;margin-top:20px;">… и&nbsp;многое другое</p>
+    </section>
+
+    <section id="contacts" class="section">
+        <h2>Вы можете мне написать</h2>
+        <a href="mailto:zorkin.roman@gmail.com" target="_blank"><i class="fas fa-envelope"></i> zorkin.roman@gmail.com</a><br>
+        <a href="https://t.me/Zorkin_Roman" target="_blank"><i class="fab fa-telegram-plane"></i> Telegram</a><br>
+        <a href="https://github.com/RomanZorkin" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+    </section>
+
+    <footer>© Роман Зорькин, 2025. Сделано с ❤️ и Python.</footer>
+
     <script>
-function initBlackHole() {
-    const canvas = document.getElementById('blackHoleCanvas');
-    const ctx = canvas.getContext('2d');
-
-    if (!ctx) {
-        console.error('Контекст canvas не поддерживается');
-        return;
-    }
-
-    // Инициализация переменных
-    let x = 0; // Будет переопределен в resizeCanvas
-    let y = 0;
-    let vx = (Math.random() - 0.5) * 1.5;
-    let vy = (Math.random() - 0.5) * 1.5;
-    let eventHorizonRadius = 50; // Начальное значение для мониторов
-    let accretionDiskRadius = 100; // Начальное значение для мониторов
-    let rotationAngle = 0; // Для вращения диска
-
-    // Установка размеров canvas и адаптация черной дыры
-    function resizeCanvas() {
-        canvas.width = window.innerWidth - 220;
-        canvas.height = window.innerHeight;
-        if (window.innerWidth <= 768) {
-            canvas.width = window.innerWidth;
-            canvas.style.left = '0px';
-            eventHorizonRadius = 30; // Меньший размер для мобильных
-            accretionDiskRadius = 60;
-        } else {
-            canvas.style.left = '220px';
-            eventHorizonRadius = 50; // Больший размер для мониторов
-            accretionDiskRadius = 100;
+        function toggleNav() {
+            document.getElementById('navPanel').classList.toggle('open');
         }
-        x = canvas.width / 2;
-        y = canvas.height / 2;
-        drawBlackHole();
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    function drawBlackHole() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Гравитационное линзирование (гало-эффект)
-        const lensGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 1.1, x, y, accretionDiskRadius * 2);
-        lensGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        lensGradient.addColorStop(0.2, 'rgba(255, 180, 100, 0.1)');
-        lensGradient.addColorStop(0.5, 'rgba(255, 150, 80, 0.2)');
-        lensGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.beginPath();
-        ctx.arc(x, y, accretionDiskRadius * 2, 0, Math.PI * 2);
-        ctx.fillStyle = lensGradient;
-        ctx.fill();
-
-        // Аккреционный диск (основной слой)
-        const diskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius, x, y, accretionDiskRadius * 1.5);
-        diskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        diskGradient.addColorStop(0.2, 'rgba(255, 200, 120, 0.4)');
-        diskGradient.addColorStop(0.5, 'rgba(255, 160, 80, 0.6)');
-        diskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.beginPath();
-        ctx.arc(x, y, accretionDiskRadius * 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = diskGradient;
-        ctx.fill();
-
-        // Поперечная светящаяся линия
-        const lineGradient = ctx.createLinearGradient(x - accretionDiskRadius * 1.5, y, x + accretionDiskRadius * 1.5, y);
-        lineGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        lineGradient.addColorStop(0.3, 'rgba(255, 200, 150, 0.5)');
-        lineGradient.addColorStop(0.5, 'rgba(255, 220, 180, 0.7)');
-        lineGradient.addColorStop(0.7, 'rgba(255, 200, 150, 0.5)');
-        lineGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(rotationAngle);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, accretionDiskRadius * 1.5, accretionDiskRadius * 0.1, 0, 0, Math.PI * 2);
-        ctx.fillStyle = lineGradient;
-        ctx.fill();
-        ctx.restore();
-
-        // Допплеровский эффект: синяя (приближающаяся) сторона
-        const blueDiskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 0.8, x, y, accretionDiskRadius * 1.6);
-        blueDiskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        blueDiskGradient.addColorStop(0.3, 'rgba(150, 200, 255, 0.3)');
-        blueDiskGradient.addColorStop(0.6, 'rgba(100, 150, 255, 0.4)');
-        blueDiskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(rotationAngle + Math.PI / 4);
-        ctx.beginPath();
-        ctx.arc(0, 0, accretionDiskRadius * 1.6, 0, Math.PI);
-        ctx.fillStyle = blueDiskGradient;
-        ctx.fill();
-        ctx.restore();
-
-        // Допплеровский эффект: красная (удаляющаяся) сторона
-        const redDiskGradient = ctx.createRadialGradient(x, y, eventHorizonRadius * 0.8, x, y, accretionDiskRadius * 1.6);
-        redDiskGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        redDiskGradient.addColorStop(0.3, 'rgba(255, 100, 50, 0.3)');
-        redDiskGradient.addColorStop(0.6, 'rgba(255, 50, 0, 0.4)');
-        redDiskGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(rotationAngle + Math.PI / 4 + Math.PI);
-        ctx.beginPath();
-        ctx.arc(0, 0, accretionDiskRadius * 1.6, 0, Math.PI);
-        ctx.fillStyle = redDiskGradient;
-        ctx.fill();
-        ctx.restore();
-
-        // Тень черной дыры (горизонт событий)
-        const coreGradient = ctx.createRadialGradient(x, y, 0, x, y, eventHorizonRadius);
-        coreGradient.addColorStop(0, 'rgba(0, 0, 0, 1)');
-        coreGradient.addColorStop(0.9, 'rgba(0, 0, 0, 0.95)');
-        coreGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.beginPath();
-        ctx.arc(x, y, eventHorizonRadius, 0, Math.PI * 2);
-        ctx.fillStyle = coreGradient;
-        ctx.fill();
-    }
-
-    function updateBlackHole() {
-        // Обновление позиции
-        x += vx;
-        y += vy;
-
-        // Отражение от краев
-        if (x - accretionDiskRadius < 0 || x + accretionDiskRadius > canvas.width) {
-            vx = -vx;
-            x = Math.max(accretionDiskRadius, Math.min(canvas.width - accretionDiskRadius, x));
-        }
-        if (y - accretionDiskRadius < 0 || y + accretionDiskRadius > canvas.height) {
-            vy = -vy;
-            y = Math.max(accretionDiskRadius, Math.min(canvas.height - accretionDiskRadius, y));
-        }
-
-        // Эффект пульсации
-        const pulse = Math.sin(Date.now() * 0.001) * 5;
-        accretionDiskRadius = 100 + pulse;
-
-        // Обновление вращения для допплеровского эффекта и линии
-        rotationAngle += 0.008;
-
-        drawBlackHole();
-    }
-
-    // Цикл анимации
-    function animate() {
-        updateBlackHole();
-        requestAnimationFrame(animate);
-    }
-
-    // Запуск анимации
-    animate();
-}
-
-// Запускаем инициализацию после загрузки DOM
-window.addEventListener('load', initBlackHole);
     </script>
 </body>
 </html>
